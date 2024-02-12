@@ -30,7 +30,7 @@ jobs:
 
       - name: Zip and upload lambda code
         run: |
-          zip -r pokemon_get.zip lambdas/pokemon/get/index.js
+          zip -j pokemon_get.zip lambdas/pokemon/get/index.js
           aws s3 cp pokemon_get.zip s3://pokemon-lambda-code-bucket/pokemon_api/pokemon_get.zip
 
       - name: Deploy CloudFormation stack
