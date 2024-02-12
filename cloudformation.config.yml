@@ -34,7 +34,7 @@ Resources:
       Runtime: nodejs18.x
       Code:
         S3Bucket: !Ref PokemonLambdaCodeBucket
-        S3Key: path/to/your/lambda-code.zip
+        S3Key: pokemon_api/pokemon_get.zip
   PokemonGetResource:
     Type: AWS::ApiGateway::Resource
     Properties:
