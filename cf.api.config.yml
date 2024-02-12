@@ -75,7 +75,7 @@ Resources:
     Properties: 
         Identifier: pokemon
         Name: Pokemon API
-        UserPoolId: !Ref UserPool
+        UserPoolId: !Ref PokemonApiUserPool
         Scopes: 
             - ScopeName: "write"
               ScopeDescription: "Write access"
