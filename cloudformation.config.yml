@@ -22,4 +22,3 @@ Resources:
       ResourceId: !Ref PokemonGetResource
       HttpMethod: GET
       AuthorizationType: NONE
-      Integration: NONE
