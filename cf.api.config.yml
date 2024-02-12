@@ -33,7 +33,7 @@ Resources:
       Role: !GetAtt PokemonLambdaExecutionRole.Arn
       Runtime: nodejs18.x
       Code:
-        S3Bucket: !Ref PokemonLambdaCodeBucket
+        S3Bucket: pokemon-lambda-code-bucket
         S3Key: pokemon_api/pokemon_get.zip
   PokemonGetResource:
     Type: AWS::ApiGateway::Resource
@@ -41,10 +41,6 @@ Resources:
       RestApiId: !Ref PokemonApiGateway 
       ParentId: !GetAtt PokemonApiGateway.RootResourceId
       PathPart: pokemon
-  PokemonLambdaCodeBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: pokemon-lambda-code-bucket
   PokemonGetMethod:
     Type: AWS::ApiGateway::Method
     Properties:
