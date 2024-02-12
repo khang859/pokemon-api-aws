@@ -58,3 +58,7 @@ Resources:
         IntegrationHttpMethod: POST
         Type: AWS_PROXY
         Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonApiLambdaFunction.Arn}/invocations
+Outputs:
+  PokemonApiLambdaFunctionName:
+    Description: "Name of the Pokemon API Lambda function"
+    Value: !Ref PokemonApiLambdaFunction
