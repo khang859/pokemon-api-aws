@@ -74,7 +74,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       ClientName: PokemonApiUserPoolClient
-      GenerateSecret: false
+      GenerateSecret: true
       UserPoolId: !Ref PokemonApiUserPool
   PokemonApiUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
