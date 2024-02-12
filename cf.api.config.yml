@@ -75,6 +75,8 @@ Resources:
     Properties:
       ClientName: PokemonApiUserPoolClient
       GenerateSecret: true
+      AllowedOAuthScopes:
+        - openid
       AllowedOAuthFlows:
         - client_credentials
       AllowedOAuthFlowsUserPoolClient: true
