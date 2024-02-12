@@ -16,9 +16,10 @@ Resources:
     Properties:
       BucketName: pokemon-lambda-code-bucket
   PokemonGetMethod:
-  Type: AWS::ApiGateway::Method
-  Properties:
-    RestApiId: !Ref PokemonApiGateway
-    ResourceId: !Ref PokemonGetResource
-    HttpMethod: GET
-    AuthorizationType: NONE
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref PokemonApiGateway
+      ResourceId: !Ref PokemonGetResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration: NONE
