@@ -75,6 +75,9 @@ Resources:
     Properties:
       ClientName: PokemonApiUserPoolClient
       GenerateSecret: true
+      AllowedOAuthFlows:
+        - client_credentials
+      AllowedOAuthFlowsUserPoolClient: true
       UserPoolId: !Ref PokemonApiUserPool
   PokemonApiUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
