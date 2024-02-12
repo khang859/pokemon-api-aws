@@ -8,7 +8,7 @@ async function getPokemonList() {
   }
 }
 
-export async function handler () {
+async function handler () {
   const pokemons = await getPokemonList();
   
   return {
