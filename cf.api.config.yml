@@ -5,6 +5,12 @@ Resources:
     Properties:
       Name: Pokemon API Gateway
       Description: Integration with PokeAPI to get information about pokemons.
+  PokemonLambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref PokemonApiLambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
   PokemonLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
