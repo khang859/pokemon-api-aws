@@ -16,3 +16,5 @@ async function handler () {
     body: JSON.stringify(pokemons)
   }
 }
+
+exports.handler = handler;
