@@ -70,12 +70,25 @@ Resources:
           Mutable: false
       AutoVerifiedAttributes:
         - email
+  PokemonApiUserPoolResourceServer:
+    Type: AWS::Cognito::UserPoolResourceServer
+    Properties: 
+        Identifier: pokemon
+        Name: Pokemon API
+        UserPoolId: !Ref UserPool
+        Scopes: 
+            - ScopeName: "write"
+              ScopeDescription: "Write access"
+            - ScopeName: "read"
+              ScopeDescription: "Read access"
   PokemonApiUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       ClientName: PokemonApiUserPoolClient
       GenerateSecret: true
-      AllowedOAuthScopes: []
+      AllowedOAuthScopes:
+        - pokemon/read
+        - pokemon/write
       AllowedOAuthFlows:
         - client_credentials
       AllowedOAuthFlowsUserPoolClient: true
