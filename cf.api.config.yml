@@ -83,6 +83,7 @@ Resources:
               ScopeDescription: "Read access"
   PokemonApiUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
+    DependsOn: PokemonApiUserPoolResourceServer
     Properties:
       ClientName: PokemonApiUserPoolClient
       GenerateSecret: true
@@ -92,7 +93,6 @@ Resources:
       AllowedOAuthFlows:
         - client_credentials
       AllowedOAuthFlowsUserPoolClient: true
-      DependsOn: PokemonApiUserPoolResourceServer
       UserPoolId: !Ref PokemonApiUserPool
   PokemonApiUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
