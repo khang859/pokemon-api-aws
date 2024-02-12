@@ -3,4 +3,4 @@ Resources:
   PokemonLambdaCodeBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: pokemon-lambda-code-bucket
+      BucketName: pokemon-lambda-code
