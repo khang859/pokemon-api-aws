@@ -2,9 +2,17 @@ async function getPokemonList() {
   try {
     const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10&offset=0");
     const data = await res.json();
-    return data;
+    return {
+      error: null,
+      message: "Success",
+      data,
+    };
   } catch (error) {
-    return [];
+    return {
+      error: "Error fetching data",
+      message: "Failed to fetch pokemon data",
+      data,
+    };
   }
 }
 

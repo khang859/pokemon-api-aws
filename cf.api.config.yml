@@ -49,15 +49,42 @@ Resources:
       PathPart: pokemon
   PokemonGetMethod:
     Type: AWS::ApiGateway::Method
+    DependsOn: PokemonApiUserPoolAuthorizer
     Properties:
       RestApiId: !Ref PokemonApiGateway
       ResourceId: !Ref PokemonGetResource
       HttpMethod: GET
-      AuthorizationType: NONE
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref PokemonApiUserPoolAuthorizer
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS_PROXY
         Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonApiLambdaFunction.Arn}/invocations
+  PokemonApiUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: PokemonApiUserPool
+      Schema:
+        - Name: email
+          Required: true
+          Mutable: false
+      AutoVerifiedAttributes:
+        - email
+  PokemonApiUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: PokemonApiUserPoolClient
+      GenerateSecret: false
+      UserPoolId: !Ref PokemonApiUserPool
+  PokemonApiUserPoolAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: PokemonApiUserPoolAuthorizer
+      RestApiId: !Ref PokemonApiGateway
+      Type: COGNITO_USER_POOLS
+      IdentitySource: method.request.header.Authorization
+      ProviderARNs:
+        - !GetAtt PokemonApiUserPool.Arn
 Outputs:
   PokemonApiLambdaFunctionName:
     Description: "Name of the Pokemon API Lambda function"
