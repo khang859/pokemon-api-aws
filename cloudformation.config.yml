@@ -11,3 +11,7 @@ Resources:
       RestApiId: !Ref PokemonApiGateway 
       ParentId: !GetAtt PokemonApiGateway.RootResourceId
       PathPart: pokemon
+  PokemonLambdaCodeBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: pokemon-lambda-code-bucket
