@@ -32,6 +32,7 @@ jobs:
         run: |
           zip -j pokemon_get.zip lambdas/pokemon/get/index.js
           aws s3 cp pokemon_get.zip s3://pokemon-lambda-code/pokemon_api/pokemon_get.zip
+          aws lambda update-function-code --function-name PokemonApiLambdaFunction --s3-bucket pokemon-lambda-code --s3-key pokemon_api/pokemon_get.zip
 
       - name: Deploy CloudFormation stack
         run: |
