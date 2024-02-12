@@ -5,6 +5,20 @@ Resources:
     Properties:
       Name: Pokemon API Gateway
       Description: Integration with PokeAPI to get informations about pokemons.
+  PokemonApiLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: nodejs18.x
+      Code:
+        ZipFile: |
+          exports.handler = async (event) => {
+            return {
+              statusCode: 200,
+              body: JSON.stringify({ message: "Hello from Pokemon lambda" }),
+            };
+          };
   PokemonGetResource:
     Type: AWS::ApiGateway::Resource
     Properties:
