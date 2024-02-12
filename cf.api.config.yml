@@ -92,6 +92,7 @@ Resources:
       AllowedOAuthFlows:
         - client_credentials
       AllowedOAuthFlowsUserPoolClient: true
+      DependsOn: PokemonApiUserPoolResourceServer
       UserPoolId: !Ref PokemonApiUserPool
   PokemonApiUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
