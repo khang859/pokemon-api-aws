@@ -5,11 +5,32 @@ Resources:
     Properties:
       Name: Pokemon API Gateway
       Description: Integration with PokeAPI to get informations about pokemons.
+  PokemonLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: AllowLogs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
   PokemonApiLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
       Handler: index.handler
-      Role: !GetAtt LambdaExecutionRole.Arn
+      Role: !GetAtt PokemonLambdaExecutionRole.Arn
       Runtime: nodejs18.x
       Code:
         S3Bucket: !GetAtt PokemonLambdaCodeBucket.Name
