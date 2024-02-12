@@ -43,8 +43,8 @@ jobs:
 
       - name: Update lambda code
         run: |
-          echo $(aws cloudformation describe-stacks --stack-name pokemon-api --query 'Stacks[0].Outputs[?OutputKey=='PokemonApiLambdaFunctionName'].OutputValue' --output json) > stackoutput.json
-          lambda_name=$(jq -r '.FunctionName' stackoutput.json)
+          echo $(aws cloudformation describe-stacks --stack-name pokemon-api --query 'Stacks[0].Outputs' --output json) > stackoutput.json
+          lambda_name=$(jq -r '.[] | select(.OutputKey=="PokemonApiLambdaFunctionName") | .OutputValue' stackoutput.json)
           echo "Updating lambda code for $lambda_name"
           aws lambda update-function-code --function-name $lambda_name --s3-bucket pokemon-lambda-code --s3-key pokemon_api/pokemon_get.zip
       
