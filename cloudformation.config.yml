@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  PokemonApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: Pokemon API Gateway
+      Description: Integration with PokeAPI to get informations about pokemons.
+  PokemonGetResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref PokemonApiGateway 
+      ParentId: !GetAtt PokemonApiGateway.RootResourceId
+      PathPart: pokemon
