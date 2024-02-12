@@ -12,13 +12,8 @@ Resources:
       Role: !GetAtt LambdaExecutionRole.Arn
       Runtime: nodejs18.x
       Code:
-        ZipFile: |
-          exports.handler = async (event) => {
-            return {
-              statusCode: 200,
-              body: JSON.stringify({ message: "Hello from Pokemon lambda" }),
-            };
-          };
+        S3Bucket: !GetAtt PokemonLambdaCodeBucket.Name
+        S3Key: path/to/your/lambda-code.zip
   PokemonGetResource:
     Type: AWS::ApiGateway::Resource
     Properties:
@@ -36,3 +31,7 @@ Resources:
       ResourceId: !Ref PokemonGetResource
       HttpMethod: GET
       AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonApiLambdaFunction.Arn}/invocations
