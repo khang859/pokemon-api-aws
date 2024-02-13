@@ -108,6 +108,38 @@ Resources:
       IdentitySource: method.request.header.Authorization
       ProviderARNs:
         - !GetAtt PokemonApiUserPool.Arn
+  PokemonApiGatewayDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: 
+      - PokemonGetMethod
+    Properties:
+      RestApiId: !Ref PokemonApiGateway
+      StageName: "api"
+      Description: "Deployment for the Pokemon API Gateway"
+  PokemonApiGatewayStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      StageName: "prod"
+      Description: "Production Stage"
+      RestApiId: !Ref PokemonApiGateway
+      DeploymentId: !Ref PokemonApiGatewayDeployment
+      MethodSettings:
+        - ResourcePath: "/*"
+          HttpMethod: "*"
+          LoggingLevel: "INFO"
+          DataTraceEnabled: true
+          MetricsEnabled: true
+      TracingEnabled: true
+      Variables:
+        lambdaFunctionName: !Ref PokemonApiLambdaFunction
+      AccessLogSetting:
+        DestinationArn: !GetAtt PokemonApiGatewayLogGroup.Arn
+        Format: "{\"requestId\":\"$context.requestId\", \"ip\":\"$context.identity.sourceIp\", \"caller\":\"$context.identity.caller\", \"user\":\"$context.identity.user\", \"requestTime\":\"$context.requestTime\", \"httpMethod\":\"$context.httpMethod\", \"resourcePath\":\"$context.resourcePath\", \"status\":\"$context.status\", \"protocol\":\"$context.protocol\", \"responseLength\":\"$context.responseLength\"}"
+  PokemonApiGatewayLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: "/aws/apigateway/PokemonApiGatewayLogs"
+      RetentionInDays: 14
 Outputs:
   PokemonApiLambdaFunctionName:
     Description: "Name of the Pokemon API Lambda function"
