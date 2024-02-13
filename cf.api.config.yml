@@ -77,8 +77,8 @@ Resources:
         Name: Pokemon API
         UserPoolId: !Ref PokemonApiUserPool
         Scopes: 
-            - ScopeName: "write"
-              ScopeDescription: "Write access"
+            - ScopeName: "read"
+              ScopeDescription: "read access"
   PokemonApiUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     DependsOn: PokemonApiUserPoolResourceServer
