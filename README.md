@@ -21,7 +21,8 @@ curl -X POST \
 * Example calling endpoint
 
 ```shell
-
+CLIENT_ID=
+CLIENT_SECRET=
 POKEMON_ENDPOINT=
 
 # Get the token and parse out the access_token property

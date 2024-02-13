@@ -62,6 +62,8 @@ Resources:
       HttpMethod: GET
       AuthorizationType: COGNITO_USER_POOLS
       AuthorizerId: !Ref PokemonApiUserPoolAuthorizer
+      AuthorizationScopes:
+        - 'pokemon/read'
       Integration:
         IntegrationHttpMethod: POST
         Type: AWS_PROXY
