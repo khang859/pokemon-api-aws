@@ -66,7 +66,7 @@ Resources:
         Type: AWS_PROXY
         Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonApiLambdaFunction.Arn}/invocations
       RequestParameters:
-        method.request.querystring.name: true
+        method.request.querystring.name: false
   
   PokemonApiUserPool:
     Type: AWS::Cognito::UserPool
