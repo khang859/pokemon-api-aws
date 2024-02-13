@@ -36,7 +36,7 @@ async function getPokemonList() {
     return {
       error: null,
       message: "Success",
-      data: await parsePokemonListResults(data),
+      data: [],
     };
   } catch (error) {
     return {
