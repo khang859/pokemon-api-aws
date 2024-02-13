@@ -143,7 +143,7 @@ Resources:
       - PokemonApiGatewayDeployment
       - PokemonApiGatewayLogGroup
     Properties:
-      StageName: "prod"
+      StageName: "api"
       Description: "Production Stage"
       RestApiId: !Ref PokemonApiGateway
       DeploymentId: !Ref PokemonApiGatewayDeployment
