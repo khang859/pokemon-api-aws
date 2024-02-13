@@ -5,12 +5,14 @@ Resources:
     Properties:
       Name: Pokemon API Gateway
       Description: Integration with PokeAPI to get information about pokemons.
+  
   PokemonLambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
       FunctionName: !Ref PokemonApiLambdaFunction
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
+  
   PokemonLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -32,6 +34,7 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Resource: arn:aws:logs:*:*:*
+  
   PokemonApiLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -41,12 +44,14 @@ Resources:
       Code:
         S3Bucket: pokemon-lambda-code
         S3Key: pokemon_api/pokemon_get.zip
+  
   PokemonGetResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref PokemonApiGateway 
       ParentId: !GetAtt PokemonApiGateway.RootResourceId
       PathPart: pokemon
+  
   PokemonGetMethod:
     Type: AWS::ApiGateway::Method
     DependsOn: PokemonApiUserPoolAuthorizer
@@ -60,6 +65,9 @@ Resources:
         IntegrationHttpMethod: POST
         Type: AWS_PROXY
         Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonApiLambdaFunction.Arn}/invocations
+      RequestParameters:
+        method.request.querystring.name: true
+  
   PokemonApiUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
@@ -70,6 +78,7 @@ Resources:
           Mutable: false
       AutoVerifiedAttributes:
         - email
+  
   PokemonApiUserPoolResourceServer:
     Type: AWS::Cognito::UserPoolResourceServer
     Properties: 
@@ -79,6 +88,7 @@ Resources:
         Scopes: 
             - ScopeName: "read"
               ScopeDescription: "read access"
+  
   PokemonApiUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     DependsOn: PokemonApiUserPoolResourceServer
@@ -91,11 +101,13 @@ Resources:
         - client_credentials
       AllowedOAuthFlowsUserPoolClient: true
       UserPoolId: !Ref PokemonApiUserPool
+  
   PokemonApiUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
     Properties:
       Domain: "pokemon-api-auth"
       UserPoolId: !Ref PokemonApiUserPool
+  
   PokemonApiUserPoolAuthorizer:
     Type: AWS::ApiGateway::Authorizer
     Properties:
@@ -105,6 +117,7 @@ Resources:
       IdentitySource: method.request.header.Authorization
       ProviderARNs:
         - !GetAtt PokemonApiUserPool.Arn
+  
   PokemonApiGatewayDeployment:
     Type: AWS::ApiGateway::Deployment
     DependsOn: 
@@ -113,6 +126,7 @@ Resources:
       RestApiId: !Ref PokemonApiGateway
       StageName: "api"
       Description: "Deployment for the Pokemon API Gateway"
+  
   PokemonApiGatewayStage:
     Type: AWS::ApiGateway::Stage
     DependsOn:
@@ -135,6 +149,7 @@ Resources:
       AccessLogSetting:
         DestinationArn: !GetAtt PokemonApiGatewayLogGroup.Arn
         Format: "{\"requestId\":\"$context.requestId\", \"ip\":\"$context.identity.sourceIp\", \"caller\":\"$context.identity.caller\", \"user\":\"$context.identity.user\", \"requestTime\":\"$context.requestTime\", \"httpMethod\":\"$context.httpMethod\", \"resourcePath\":\"$context.resourcePath\", \"status\":\"$context.status\", \"protocol\":\"$context.protocol\", \"responseLength\":\"$context.responseLength\"}"
+  
   PokemonApiGatewayLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
@@ -144,3 +159,6 @@ Outputs:
   PokemonApiLambdaFunctionName:
     Description: "Name of the Pokemon API Lambda function"
     Value: !Ref PokemonApiLambdaFunction
+  PokemonApiGateway:
+    Description: "Pokemon Gateway name"
+    Value: !Ref PokemonApiGateway
