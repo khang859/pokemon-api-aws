@@ -125,7 +125,6 @@ Resources:
       - PokemonGetMethod
     Properties:
       RestApiId: !Ref PokemonApiGateway
-      StageName: ""
       Description: "Deployment for the Pokemon API Gateway"
   
   PokemonApiGatewayStage:
