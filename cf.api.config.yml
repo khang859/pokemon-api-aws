@@ -118,6 +118,9 @@ Resources:
       Description: "Deployment for the Pokemon API Gateway"
   PokemonApiGatewayStage:
     Type: AWS::ApiGateway::Stage
+    DependsOn:
+      - PokemonApiGatewayDeployment
+      - PokemonApiGatewayLogGroup
     Properties:
       StageName: "prod"
       Description: "Production Stage"
