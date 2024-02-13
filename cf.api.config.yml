@@ -162,7 +162,6 @@ Resources:
   PokemonApiGatewayLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      Role: !GetAtt PokemonApiGateWayLogsRole.Arn
       LogGroupName: "/aws/apigateway/PokemonApiGatewayLogs"
       RetentionInDays: 14
 Outputs:
