@@ -25,7 +25,9 @@ async function parsePokemonListResults (data) {
     results.set(pokemonDetails.id, responseObject);
   }
 
-  return results;
+  // @TODO get location area encounters with promise.all
+
+  return Array.from(results.values());
 }
 
 async function getPokemonList() {
