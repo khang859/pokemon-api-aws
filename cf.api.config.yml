@@ -144,7 +144,6 @@ Resources:
       - PokemonApiGatewayLogGroup
     Properties:
       StageName: "prod"
-      Role: !GetAtt PokemonApiGateWayLogsRole.Arn
       Description: "Production Stage"
       RestApiId: !Ref PokemonApiGateway
       DeploymentId: !Ref PokemonApiGatewayDeployment
@@ -163,6 +162,7 @@ Resources:
   PokemonApiGatewayLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
+      Role: !GetAtt PokemonApiGateWayLogsRole.Arn
       LogGroupName: "/aws/apigateway/PokemonApiGatewayLogs"
       RetentionInDays: 14
 Outputs:
