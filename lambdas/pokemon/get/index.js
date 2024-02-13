@@ -44,7 +44,6 @@ async function getPokemonList() {
     return {
       error: "Error fetching data",
       message: "Failed to fetch pokemon data",
-      data,
     };
   }
 }
