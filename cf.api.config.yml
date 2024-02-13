@@ -41,6 +41,7 @@ Resources:
       Handler: index.handler
       Role: !GetAtt PokemonLambdaExecutionRole.Arn
       Runtime: nodejs18.x
+      Timeout: 15
       Code:
         S3Bucket: pokemon-lambda-code
         S3Key: pokemon_api/pokemon_get.zip
