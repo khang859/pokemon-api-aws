@@ -67,6 +67,7 @@ Resources:
         Uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonApiLambdaFunction.Arn}/invocations
       RequestParameters:
         method.request.querystring.name: false
+        method.response.header.Authorization: true
   
   PokemonApiUserPool:
     Type: AWS::Cognito::UserPool
