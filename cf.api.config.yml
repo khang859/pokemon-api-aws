@@ -5,27 +5,6 @@ Resources:
     Properties:
       Name: Pokemon API Gateway
       Description: Integration with PokeAPI to get information about pokemons.
-  PokemonApiGateWayLogsRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: AllowLogs
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
-                  - logs:PutLogEvents
-                Resource: arn:aws:logs:*:*:*
   PokemonLambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
@@ -100,8 +79,6 @@ Resources:
         Scopes: 
             - ScopeName: "write"
               ScopeDescription: "Write access"
-            - ScopeName: "read"
-              ScopeDescription: "Read access"
   PokemonApiUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     DependsOn: PokemonApiUserPoolResourceServer
@@ -110,7 +87,6 @@ Resources:
       GenerateSecret: true
       AllowedOAuthScopes:
         - pokemon/read
-        - pokemon/write
       AllowedOAuthFlows:
         - client_credentials
       AllowedOAuthFlowsUserPoolClient: true
