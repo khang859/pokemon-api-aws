@@ -102,7 +102,7 @@ async function getPokemonList() {
   } catch (error) {
     return {
       error: "Error fetching data",
-      message: "Failed to fetch pokemon data",
+      message: "Failed to fetch pokemons data",
     };
   }
 }
@@ -110,7 +110,6 @@ async function getPokemonList() {
 async function handler (event) {
   
   let result;
-
   if (event && event.queryStringParameters && event.queryStringParameters.name) {
     result = await getPokemonByName(event.queryStringParameters.name);
   } else {

@@ -2,23 +2,7 @@
 
 ### Usage
 
-* Obtain token with following command, don't forget to add in CLIENT_ID and CLIENT_SECRET
-
-```shell
-
-CLIENT_ID=
-CLIENT_SECRET=
-
-curl -X POST \
-  "https://pokemon-api-auth.auth.us-east-2.amazoncognito.com/oauth2/token" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  --data-urlencode "grant_type=client_credentials" \
-  --data-urlencode "client_id=${CLIENT_ID}" \
-  --data-urlencode "client_secret=${CLIENT_SECRET}" \
-  --data-urlencode "scope=pokemon/read"
-```
-
-* Example calling endpoint
+* Example calling pokemon endpoint
 
 ```shell
 CLIENT_ID=
@@ -32,8 +16,11 @@ token=$(curl -X POST \
   --data-urlencode "grant_type=client_credentials" \
   --data-urlencode "client_id=${CLIENT_ID}" \
   --data-urlencode "client_secret=${CLIENT_SECRET}" \
-  --data-urlencode "scope=pokemon/read" | jq ".access_token")
+  --data-urlencode "scope=pokemon/read" | jq ".access_token" | tr -d '"')
 
-# Call the pokemon endpoint
-curl $POKEMON_ENDPOINT -H "Authorization: $token"
+# Call the pokemon endpoint with name query
+curl --location "$POKEMON_ENDPOINT?name=charizard" -H "Authorization: Bearer $token" > name_param_result.json
+
+# Give it a nice display on the terminal
+jq "." name_param_result.json
 ```
