@@ -24,3 +24,14 @@ curl --location "$POKEMON_ENDPOINT?name=charizard" -H "Authorization: Bearer $to
 # Give it a nice display on the terminal
 jq "." name_param_result.json
 ```
+
+## Deploy to your own AWS
+
+1. Clone this repo
+2. Add in the AWS creds for your aws account, for github actions, its via the Secrets settings.
+  1. AWS_ACCESS_KEY_ID
+  2. AWS_SECRET_ACCESS_KEY
+  3. AWS_REGION
+3. Push to the `main` branch, this should trigger the github action and provision your stack.
+4. There is a manual step, you need to attach role to write logs to cloudwatch to your API Gate settings under the `/apigateway/main/settings/` path. (Could possibly automate with aws cli in the future)
+5. Enjoy your new Pokemon API.
