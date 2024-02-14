@@ -158,6 +158,38 @@ Resources:
     Properties:
       LogGroupName: "/aws/apigateway/PokemonApiGatewayLogs"
       RetentionInDays: 14
+
+  PokemonApiGatewayWebACL:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      DefaultAction:
+        Allow: {}
+      Scope: REGIONAL
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: PokemonApiGatewayWebACLMetric
+      Name: PokemonApiGatewayWebACL
+      Description: "WebACL for Pokemon API Gateway"
+      Rules:
+        - Name: RateLimitRule
+          Priority: 1
+          Action:
+            Block: {}
+          Statement:
+            RateBasedStatement:
+              AggregateKeyType: IP
+              Limit: 2000
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: RateLimitRule
+
+  WebACLAssociationWithApiGateway:
+    Type: AWS::WAFv2::WebACLAssociation
+    Properties:
+      ResourceArn: !Sub arn:aws:apigateway:${AWS::Region}::/restapis/${PokemonApiGateway}/stages/api
+      WebACLArn: !GetAtt PokemonApiGatewayWebACL.Arn
 Outputs:
   PokemonApiLambdaFunctionName:
     Description: "Name of the Pokemon API Lambda function"
